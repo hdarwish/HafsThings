@@ -7,15 +7,20 @@ using System.Threading.Tasks;
 
 namespace EmployeeService
 {
-    [ServiceContract]
+    [ServiceContract(CallbackContract =(typeof(IEmployeeServiceCallback)))]
     public interface IEmployeeService
     {
 
-        [OperationContract]
+        [OperationContract] 
         EmployeeInfo GetEmployee(EmplpoyeeRequest empRequest);
 
-        [OperationContract]
+        [OperationContract(IsOneWay = true)]
         void SaveEmployee(EmployeeInfo employeeInfo);
 
+    }
+    public interface IEmployeeServiceCallback
+    {
+        [OperationContract(IsOneWay = true)]
+        void progress(int percentageCompleted);
     }
 }

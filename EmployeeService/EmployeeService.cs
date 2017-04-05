@@ -6,14 +6,30 @@ using System.Data.SqlClient;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Threading;
+using System.ServiceModel;
 
 namespace EmployeeService
 {
     // NOTE: You can use the "Rename" command on the "Refactor" menu to change the class name "Service1" in both code and config file together.
+    //[ServiceBehavior(ConcurrencyMode = ConcurrencyMode.Reentrant)]
+    [ServiceBehavior(InstanceContextMode = InstanceContextMode.PerSession)]
     public class EmployeeService : IEmployeeService
     {
+        IEmployeeServiceCallback Callback
+        {
+            get
+            {
+                 return OperationContext.Current.GetCallbackChannel<IEmployeeServiceCallback>();
+                
+            }
+        }
         public EmployeeInfo GetEmployee(EmplpoyeeRequest empRequest)
         {
+            for(int i=0;i<=100;i++){
+                Thread.Sleep(50);
+                Callback.progress(i);
+            }
             Employee employee = null;
             string cs = ConfigurationManager.ConnectionStrings["DBCS"].ConnectionString;
             using (SqlConnection con = new SqlConnection(cs))
@@ -55,8 +71,13 @@ namespace EmployeeService
             }
             return new EmployeeInfo(employee);
         }
+
         public void SaveEmployee(EmployeeInfo employeeInfo)
         {
+            for (int i = 0; i <= 100; i++) {
+                Thread.Sleep(50);
+                Callback.progress(i);
+            }
             string cs = ConfigurationManager.ConnectionStrings["DBCS"].ConnectionString;
             using (SqlConnection con = new SqlConnection(cs))
             {
