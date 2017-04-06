@@ -13,7 +13,7 @@ namespace EmployeeService
 {
     // NOTE: You can use the "Rename" command on the "Refactor" menu to change the class name "Service1" in both code and config file together.
     //[ServiceBehavior(ConcurrencyMode = ConcurrencyMode.Reentrant)]
-    [ServiceBehavior(InstanceContextMode = InstanceContextMode.PerSession)]
+    //[ServiceBehavior(InstanceContextMode = InstanceContextMode.PerSession)]
     public class EmployeeService : IEmployeeService
     {
         IEmployeeServiceCallback Callback
@@ -26,10 +26,10 @@ namespace EmployeeService
         }
         public EmployeeInfo GetEmployee(EmplpoyeeRequest empRequest)
         {
-            for(int i=0;i<=100;i++){
-                Thread.Sleep(50);
-                Callback.progress(i);
-            }
+            //for(int i=0;i<=100;i++){
+            //    Thread.Sleep(50);
+            //    Callback.progress(i);
+            //}
             Employee employee = null;
             string cs = ConfigurationManager.ConnectionStrings["DBCS"].ConnectionString;
             using (SqlConnection con = new SqlConnection(cs))

@@ -1,0 +1,34 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <title></title>
+    <script src="Scripts/jquery-1.10.2.js"></script>
+    <script type="text/javascript">
+        $(document).ready(function () {
+            var ulEMP = $('#ulEmployees')
+            $('#btnGetEmployees').click(function () {
+                $.ajax({
+                    type: 'GET',
+                    url: 'http://localhost:1775/api/employees',
+                    datatype: 'json',
+                    success: function (data) {
+                        ulEMP.empty();
+                        $.each(data, function (index, val) {
+                            var record = val.id+ ' - ' + val.name + ' - ' +val.gender + ' - ' +val.dateOfBirth + ' - ' +val.employeeType ;
+                            ulEMP.append('<li>' + record + '</li>');
+                        });
+                    }
+                });
+            });
+            $('#btnClear').click(function () {
+                ulEMP.empty();
+            });
+        });
+    </script>
+</head>
+<body>
+    <input id="btnGetEmployees" type="button" value="get all employees" />
+    <input id="btnClear" type="button" value="clear" />
+    <ul id="ulEmployees"></ul>
+</body>
+</html>

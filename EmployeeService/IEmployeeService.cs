@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace EmployeeService
 {
-    [ServiceContract(CallbackContract =(typeof(IEmployeeServiceCallback)))]
+    [ServiceContract(CallbackContract = (typeof(IEmployeeServiceCallback)))]
     public interface IEmployeeService
     {
 
