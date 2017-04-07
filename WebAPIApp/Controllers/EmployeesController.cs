@@ -5,6 +5,7 @@ using System.Net;
 using System.Net.Http;
 using System.Web.Http;
 using DbDataAccess;
+using System.Threading;
 
 namespace WebAPIApp.Controllers
 {
@@ -12,23 +13,26 @@ namespace WebAPIApp.Controllers
     {
 
         [HttpGet]
+        [BasicAthentication]
         public HttpResponseMessage LoadAllEmployees(string gender="All")
         {
+            string username = Thread.CurrentPrincipal.Identity.Name;
             using (sampleDBEntities entity = new sampleDBEntities())
             {
-                switch (gender.ToLower())
+                switch (username)
                 {
-                    case "all":
-                        return Request.CreateResponse(HttpStatusCode.OK, entity.Employees.ToList());
+                    //case "all":
+                    //    return Request.CreateResponse(HttpStatusCode.OK, entity.Employees.ToList());
                     case "male":
+                        var ls = entity.Employees.Where(e => e.Gender.ToLower() == "male").ToList();
                         return Request.CreateResponse(HttpStatusCode.OK,
                             entity.Employees.Where(e => e.Gender.ToLower() == "male").ToList());
                     case "female":
                         return Request.CreateResponse(HttpStatusCode.OK,
                             entity.Employees.Where(e => e.Gender.ToLower() == "female").ToList());
                     default:
-                        return Request.CreateErrorResponse(HttpStatusCode.BadRequest,
-                            "Value for gender must be all, male or female "+ gender + " is invalid" );
+                        return Request.CreateResponse(HttpStatusCode.BadRequest);
+                            // "Value for gender must be all, male or female "+ gender + " is invalid" );
 
 
                 }

@@ -29,6 +29,7 @@ namespace DbDataAccess
     
         public virtual DbSet<Employee> Employees { get; set; }
         public virtual DbSet<Student> Students { get; set; }
+        public virtual DbSet<User> Users { get; set; }
     
         public virtual int spGetEmployee(Nullable<int> id)
         {

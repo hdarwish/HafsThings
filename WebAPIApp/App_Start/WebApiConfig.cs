@@ -61,9 +61,9 @@ namespace WebAPIApp
             //var JsonpFormatter = new JsonpMediaTypeFormatter(config.Formatters.JsonFormatter);
             //config.Formatters.Insert(0, JsonpFormatter);
 
-            //config.Formatters.Add(new CustomJsonFormatter());
+            config.Formatters.Add(new CustomJsonFormatter());
 
-             config.Formatters.Remove(config.Formatters.XmlFormatter);
+             //config.Formatters.Remove(config.Formatters.XmlFormatter);
             //config.Formatters.Remove(config.Formatters.JsonFormatter);
 
             //config.Formatters.JsonFormatter.SerializerSettings.Formatting = Newtonsoft.Json.Formatting.Indented;
